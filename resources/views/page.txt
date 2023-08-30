@@ -1,0 +1,52 @@
+ @foreach ($articles as $item)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $item->title }}</td>
+                <td>{{ $item->category->name }}</td>
+                <td>{{ $item->views }}</td>
+                <td>
+                  @if ($item->status == 0)
+                      <span class="badge bg-danger">
+                        private
+                      </span>
+                  @else
+                      <span class="badge bg-success">
+                        published
+                      </span>
+                  @endif
+                </td>
+                <td>{{ $item->publish_date }}</td>
+                <td> 
+                    <a type="button" href="#" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#"><strong>Detail</strong></a>
+                    <a type="button" href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#"><strong>Edit</strong></a>
+                    <a type="button" href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $item->id }}"><strong>Delete</strong></a>
+                </td>
+            </tr>
+            @endforeach
+
+
+// for delated confimation
+ @foreach ($articles as $item)
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-danger">
+          <h5 class="modal-title text-white" id="exampleModalLabel">confirmation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to delete {{ $item->title }} article?
+        </div>
+        <div class="modal-footer">
+            {{-- <form action="{{ url('admin/category/'.$item->id) }}" method="post"> --}}
+              {{-- @method('DELETE') --}}
+              {{-- @csrf --}}
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-danger">Sure</button>
+            {{-- </form> --}}
+        </div>
+      </div>
+    </div>
+  </div>
+  @endforeach
